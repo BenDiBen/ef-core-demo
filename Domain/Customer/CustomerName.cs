@@ -1,3 +1,8 @@
-﻿namespace EfCoreDemo.Domain;
+﻿using System.Collections.Immutable;
 
-public record CustomerName(FirstName First, LastName Last);
+namespace EfCoreDemo.Domain;
+
+public record CustomerName(GivenName First, LastName Last)
+{
+    public ImmutableList<GivenName> MiddleNames { get; init; } = ImmutableList<GivenName>.Empty;
+}

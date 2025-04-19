@@ -3,7 +3,7 @@
 namespace EfCoreDemo.Domain;
 
 [ValueObject<string>]
-public partial class FirstName
+public partial class GivenName
 {
     private static Validation Validate(string input) =>
         input switch
