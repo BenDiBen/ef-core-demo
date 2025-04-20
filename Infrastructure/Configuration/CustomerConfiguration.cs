@@ -1,6 +1,7 @@
 using System.Collections.Immutable;
 using EfCoreDemo.Domain;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace EfCoreDemo.Infrastructure.Configuration;
@@ -20,7 +21,11 @@ public class CustomerConfiguration : IEntityTypeConfiguration<Customer>
                 .HasMaxLength(250)
                 .HasConversion(
                     mn => string.Join(MiddleNameSeparator, mn.Select(x => x.Value)), 
-                    mn => mn.Split(MiddleNameSeparator, StringSplitOptions.None).Select(GivenName.From).ToImmutableList());
+                    mn => mn.Split(MiddleNameSeparator, StringSplitOptions.None).Select(GivenName.From).ToImmutableList())
+                .Metadata.SetValueComparer(new ValueComparer<ImmutableList<GivenName>>(
+                    (c1, c2) => c1 != null && c2 != null && c1.SequenceEqual(c2),
+                    c => c.Aggregate(0, (a, v) => HashCode.Combine(a, v.GetHashCode())),
+                    c => c));
         });
 
         builder.OwnsOne(c => c.Addresses, addressesBuilder =>
@@ -42,6 +47,14 @@ public class CustomerConfiguration : IEntityTypeConfiguration<Customer>
             contactBuilder.Property(c => c.WorkNumber).HasMaxLength(12);
             contactBuilder.Property(c => c.Email).HasMaxLength(100);
         });
+        
+        builder.OwnsOne(c => c.DemographicInfo, demographicBuilder =>
+        {
+            demographicBuilder.Property(d => d.Gender).HasMaxLength(8);
+            demographicBuilder.Property(d => d.PreferredLanguage).HasMaxLength(2);
+        });
+        
+        builder.OwnsOne(c => c.MarketingPreferences);
         
         return;
 

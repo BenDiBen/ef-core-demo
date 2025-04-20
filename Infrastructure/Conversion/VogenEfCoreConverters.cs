@@ -14,4 +14,6 @@ namespace EfCoreDemo.Infrastructure.Conversion;
 [EfCoreConverter<Domain.Province>]
 [EfCoreConverter<Domain.PhoneNumber>]
 [EfCoreConverter<Domain.EmailAddress>]
+[EfCoreConverter<Domain.Gender>]
+[EfCoreConverter<Domain.Language>]
 internal partial class VogenEfCoreConverters;

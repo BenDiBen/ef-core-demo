@@ -17,4 +17,8 @@
         <PackageReference Include="Vogen" Version="7.0.3" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="Infrastructure\Comparison\" />
+    </ItemGroup>
+
 </Project>
