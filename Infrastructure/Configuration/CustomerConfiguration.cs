@@ -1,4 +1,4 @@
-﻿using System.Collections.Immutable;
+using System.Collections.Immutable;
 using EfCoreDemo.Domain;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
@@ -22,8 +22,22 @@ public class CustomerConfiguration : IEntityTypeConfiguration<Customer>
                     mn => string.Join(MiddleNameSeparator, mn.Select(x => x.Value)), 
                     mn => mn.Split(MiddleNameSeparator, StringSplitOptions.None).Select(GivenName.From).ToImmutableList());
         });
+
+        builder.OwnsOne(c => c.Addresses, addressesBuilder =>
+        {
+            addressesBuilder.Ignore(a => a.IsSameAsResidential);
+            addressesBuilder.OwnsOne(a => a.Residential, ConfigureAddress);
+            addressesBuilder.OwnsOne<Address>("PostalInternal", ConfigureAddress);
+        });
         
-        builder.OwnsOne<Address>(c => c.Address, addressBuilder =>
+        builder
+            .HasMany(c => c.Accounts)
+            .WithOne()
+            .HasForeignKey(a => a.CustomerId);
+        
+        return;
+
+        void ConfigureAddress(OwnedNavigationBuilder<Addresses, Address> addressBuilder)
         {
             addressBuilder.Property(a => a.PostalCode).HasMaxLength(4);
             addressBuilder.Property(a => a.Province).HasMaxLength(20);
@@ -34,11 +48,6 @@ public class CustomerConfiguration : IEntityTypeConfiguration<Customer>
                 streetBuilder.Property(s => s.FirstLine).HasMaxLength(50);
                 streetBuilder.Property(s => s.SecondLine).HasMaxLength(50);
             });
-        });
-        
-        builder
-            .HasMany(c => c.Accounts)
-            .WithOne()
-            .HasForeignKey(a => a.CustomerId);
+        }
     }
 }
