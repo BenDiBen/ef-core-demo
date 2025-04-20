@@ -35,6 +35,14 @@ public class CustomerConfiguration : IEntityTypeConfiguration<Customer>
             .WithOne()
             .HasForeignKey(a => a.CustomerId);
         
+        builder.OwnsOne(c => c.ContactDetails, contactBuilder =>
+        {
+            contactBuilder.Property(c => c.PhoneNumber).HasMaxLength(12);
+            contactBuilder.Property(c => c.AlternateNumber).HasMaxLength(12);
+            contactBuilder.Property(c => c.WorkNumber).HasMaxLength(12);
+            contactBuilder.Property(c => c.Email).HasMaxLength(100);
+        });
+        
         return;
 
         void ConfigureAddress(OwnedNavigationBuilder<Addresses, Address> addressBuilder)

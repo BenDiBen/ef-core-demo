@@ -6,4 +6,5 @@ public class Customer
     public CustomerName Name { get; set; }
     public ICollection<Account> Accounts { get; set; }
     public Addresses Addresses { get; set; }
+    public ContactDetails ContactDetails { get; set; }
 }
