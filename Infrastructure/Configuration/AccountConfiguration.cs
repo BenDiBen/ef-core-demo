@@ -14,5 +14,6 @@ public class AccountConfiguration : IEntityTypeConfiguration<Account>
 
         builder.Property(a => a.Number).HasMaxLength(10);
         builder.Property(a => a.BranchCode).HasMaxLength(3);
+        builder.Property(a => a.Type).HasMaxLength(12);
     }
 }

@@ -17,5 +17,7 @@ public class TransactionConfiguration : IEntityTypeConfiguration<Transaction>
             .WithMany(t => t.DebitTransactions)
             .HasForeignKey(t => t.DebitedAccountId)
             .OnDelete(DeleteBehavior.Restrict);
+        builder.Property(t => t.CreditorReference).HasMaxLength(200);
+        builder.Property(t => t.DebtorReference).HasMaxLength(200);
     }
 }
