@@ -5,10 +5,18 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
-    options.UseSqlServer("Server=localhost,1433;Database=EfCoreDemo;User Id=sa;Password=YourStrong!Passw0rd;TrustServerCertificate=True;"));
+    options.UseSqlServer(builder.Configuration.GetConnectionString("Default")));
 builder.Services.AddOpenApi();
 
 var app = builder.Build();
+
+// Seed database if in development
+if (app.Environment.IsDevelopment())
+{
+    using var scope = app.Services.CreateScope();
+    var dbContext = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+    await dbContext.EnsureSeededAsync();
+}
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
