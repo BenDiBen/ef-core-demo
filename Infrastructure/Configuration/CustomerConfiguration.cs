@@ -1,5 +1,6 @@
 using System.Collections.Immutable;
 using EfCoreDemo.Domain;
+using EfCoreDemo.Infrastructure.Conversion;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
@@ -38,13 +39,20 @@ public class CustomerConfiguration : IEntityTypeConfiguration<Customer>
         builder
             .HasMany(c => c.Accounts)
             .WithOne()
-            .HasForeignKey(a => a.CustomerId);
+            .HasForeignKey(a => a.CustomerId)
+            .OnDelete(DeleteBehavior.Restrict);
         
         builder.OwnsOne(c => c.ContactDetails, contactBuilder =>
         {
-            contactBuilder.Property(c => c.PhoneNumber).HasMaxLength(12);
-            contactBuilder.Property(c => c.AlternateNumber).HasMaxLength(12);
-            contactBuilder.Property(c => c.WorkNumber).HasMaxLength(12);
+            contactBuilder.Property(c => c.PhoneNumber)
+                .HasConversion(new PhoneNumberConverter())
+                .HasMaxLength(12);
+            contactBuilder.Property(c => c.AlternateNumber)
+                .HasConversion(new PhoneNumberConverter())
+                .HasMaxLength(12);
+            contactBuilder.Property(c => c.WorkNumber)
+                .HasConversion(new PhoneNumberConverter())
+                .HasMaxLength(12);
             contactBuilder.Property(c => c.Email).HasMaxLength(100);
         });
         

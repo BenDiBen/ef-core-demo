@@ -10,5 +10,9 @@ public class AccountConfiguration : IEntityTypeConfiguration<Account>
     {
         builder.HasKey(a => a.Id);
         builder.Ignore(a => a.Transactions);
+        builder.HasAlternateKey(a => a.Number);
+
+        builder.Property(a => a.Number).HasMaxLength(10);
+        builder.Property(a => a.BranchCode).HasMaxLength(3);
     }
 }

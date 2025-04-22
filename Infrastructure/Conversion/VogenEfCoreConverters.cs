@@ -1,4 +1,4 @@
-﻿using Vogen;
+using Vogen;
 
 namespace EfCoreDemo.Infrastructure.Conversion;
 
@@ -12,8 +12,10 @@ namespace EfCoreDemo.Infrastructure.Conversion;
 [EfCoreConverter<Domain.AddressLine>]
 [EfCoreConverter<Domain.PostalCode>]
 [EfCoreConverter<Domain.Province>]
-[EfCoreConverter<Domain.PhoneNumber>]
 [EfCoreConverter<Domain.EmailAddress>]
 [EfCoreConverter<Domain.Gender>]
 [EfCoreConverter<Domain.Language>]
+[EfCoreConverter<Domain.AccountType>]
+[EfCoreConverter<Domain.AccountNumber>]
+[EfCoreConverter<Domain.TransactionReference>]
 internal partial class VogenEfCoreConverters;

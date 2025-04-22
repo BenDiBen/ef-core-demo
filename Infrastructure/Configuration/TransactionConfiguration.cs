@@ -1,4 +1,4 @@
-﻿using EfCoreDemo.Domain;
+using EfCoreDemo.Domain;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -11,9 +11,11 @@ public class TransactionConfiguration : IEntityTypeConfiguration<Transaction>
         builder.HasKey(t => t.Id);
         builder.HasOne<Account>()
             .WithMany(t => t.CreditTransactions)
-            .HasForeignKey(t => t.CreditedAccountId);
+            .HasForeignKey(t => t.CreditedAccountId)
+            .OnDelete(DeleteBehavior.Restrict);
         builder.HasOne<Account>()
             .WithMany(t => t.DebitTransactions)
-            .HasForeignKey(t => t.DebitedAccountId);
+            .HasForeignKey(t => t.DebitedAccountId)
+            .OnDelete(DeleteBehavior.Restrict);
     }
 }

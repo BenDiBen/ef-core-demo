@@ -24,8 +24,8 @@ public readonly partial struct PhoneNumber
             return Validation.Invalid("Phone number cannot be empty");
 
         return PhoneNumberRegex.IsMatch(input)
-            ? Validation.Invalid("Phone number must be in format '+27 00 000 0000'")
-            : Validation.Ok;
+            ? Validation.Ok
+            : Validation.Invalid("Phone number must be in format '+27 00 000 0000'");
     }
 
     [GeneratedRegex(@"^(?:0|\+27)(?:\s|-)(\d{2})(?:\s|-)(\d{3})(?:\s|-)(\d{4})$")]

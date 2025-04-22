@@ -1,7 +1,7 @@
 namespace EfCoreDemo.Domain;
 
 public record DemographicInfo(
-    DateTime DateOfBirth,
+    DateOnly DateOfBirth,
     Gender? Gender,
     Language? PreferredLanguage
 )
