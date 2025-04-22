@@ -1,11 +1,11 @@
+using EfCoreDemo;
 using EfCoreDemo.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddDbContext<ApplicationDbContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("Default")));
+builder.Services.AddPersistence(builder.Configuration);
 builder.Services.AddOpenApi();
 
 var app = builder.Build();

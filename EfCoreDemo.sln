@@ -1,6 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EfCoreDemo", "EfCoreDemo.csproj", "{19D5E78A-FD01-4E74-A770-B6AF6F086EBE}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EfCoreDemo", "Application\EfCoreDemo.csproj", "{19D5E78A-FD01-4E74-A770-B6AF6F086EBE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
