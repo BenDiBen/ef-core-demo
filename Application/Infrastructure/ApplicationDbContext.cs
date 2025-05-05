@@ -65,7 +65,7 @@ public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options
     {
         var parameter = Expression.Parameter(entityType, "e");
         var property = Expression.Property(parameter, nameof(ISoftDeleteEntity.IsDeleted));
-        var equal = Expression.Equal(property, Expression.Constant(true));
+        var equal = Expression.Equal(property, Expression.Constant(false));
         return Expression.Lambda(equal, parameter);
     }
 }

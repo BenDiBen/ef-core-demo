@@ -8,7 +8,7 @@ public class Account : ISoftDeleteEntity
     public required BranchCode BranchCode { get; set; }
     public Money Balance { get; set; }
     public Money OverdraftLimit { get; set; }
-    public bool IsInExcessOfOverdraft => -Balance < OverdraftLimit;
+    public bool IsInExcessOfOverdraft => Balance + OverdraftLimit < Money.None;
     public ICollection<Transaction> CreditTransactions { get; set; } = new List<Transaction>();
     public ICollection<Transaction> DebitTransactions { get; set; } = new List<Transaction>();
 

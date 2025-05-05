@@ -31,6 +31,6 @@ public readonly partial struct PhoneNumber
     [GeneratedRegex(@"^(?:0|\+27)(?:\s|-)(\d{2})(?:\s|-)(\d{3})(?:\s|-)(\d{4})$")]
     private static partial Regex GenerateInputRegex();
     
-    [GeneratedRegex(@"^\+27 \d{2} \d{3} \d{4}$")]
+    [GeneratedRegex(@"^\+27\s{0,1}\d{2}\s{0,1}\d{3}\s{0,1}\d{4}$")]
     private static partial Regex GeneratePhoneNumberRegex();
 }
