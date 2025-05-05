@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+<meta charset='utf-8' />
+<title>Benchmarks.QueryBenchmarks-20250422-181111</title>
+
+<style type="text/css">
+	table { border-collapse: collapse; display: block; width: 100%; overflow: auto; }
+	td, th { padding: 6px 13px; border: 1px solid #ddd; text-align: right; }
+	tr { background-color: #fff; border-top: 1px solid #ccc; }
+	tr:nth-child(even) { background: #f8f8f8; }
+</style>
+</head>
+<body>
+<pre><code>
+BenchmarkDotNet v0.14.0, Windows 11 (10.0.26100.3775)
+13th Gen Intel Core i7-13700KF, 1 CPU, 24 logical and 16 physical cores
+.NET SDK 9.0.203
+  [Host]     : .NET 9.0.4 (9.0.425.16305), X64 RyuJIT AVX2
+  DefaultJob : .NET 9.0.4 (9.0.425.16305), X64 RyuJIT AVX2
+</code></pre>
+<pre><code></code></pre>
+
+<table>
+<thead><tr><th>Method                         </th><th>Job </th><th>Toolchain       </th><th>Mean</th><th>Error</th><th>StdDev</th>
+</tr>
+</thead><tbody><tr><td>GetAllCustomersToEmailNaive</td><td>DefaultJob</td><td>Default</td><td>1.224 ms</td><td>0.0224 ms</td><td>0.0314 ms</td>
+</tr><tr><td>GetAllCustomersToEmailNoTracking</td><td>DefaultJob</td><td>Default</td><td>1.218 ms</td><td>0.0237 ms</td><td>0.0273 ms</td>
+</tr><tr><td>GetAllCustomersToEmailPreFiltered</td><td>DefaultJob</td><td>Default</td><td>1.218 ms</td><td>0.0181 ms</td><td>0.0169 ms</td>
+</tr><tr><td>GetAllCustomersToEmailPreFilteredWith</td><td>DefaultJob</td><td>Default</td><td>1.236 ms</td><td>0.0230 ms</td><td>0.0384 ms</td>
+</tr><tr><td>GetAllCustomersToEmailNaive</td><td>InProcess</td><td>InProcessEmitToolchain</td><td>1.187 ms</td><td>0.0233 ms</td><td>0.0303 ms</td>
+</tr><tr><td>GetAllCustomersToEmailNoTracking</td><td>InProcess</td><td>InProcessEmitToolchain</td><td>1.230 ms</td><td>0.0242 ms</td><td>0.0376 ms</td>
+</tr><tr><td>GetAllCustomersToEmailPreFiltered</td><td>InProcess</td><td>InProcessEmitToolchain</td><td>1.218 ms</td><td>0.0193 ms</td><td>0.0161 ms</td>
+</tr><tr><td>GetAllCustomersToEmailPreFilteredWith</td><td>InProcess</td><td>InProcessEmitToolchain</td><td>1.200 ms</td><td>0.0149 ms</td><td>0.0159 ms</td>
+</tr></tbody></table>
+</body>
+</html>
