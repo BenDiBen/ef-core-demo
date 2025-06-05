@@ -2,20 +2,18 @@ using BenchmarkDotNet.Attributes;
 using BenchmarkDotNet.Diagnostics.dotMemory;
 using Dapper;
 using EfCoreDemo.Domain;
-using EfCoreDemo.Infrastructure;
+using EfCoreDemo.Persistence;
+using EfCoreDemo.Persistence;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 
-namespace Benchmarks;
+namespace EfCoreDemo.Benchmarks;
 
-[DotMemoryDiagnoser]
-[SimpleJob]
-[InProcess]
 [MemoryDiagnoser]
 [MinColumn, MaxColumn]
-public class QueryBenchmarks
+public class SimpleQueryBenchmarks
 {
-    private DbContextOptionsBuilder<ApplicationDbContext> _optionsBuilder;
+    private readonly DbContextOptionsBuilder<ApplicationDbContext> _optionsBuilder = new ();
     private readonly FormattableString _sql =
         $"SELECT ContactDetails_Email FROM Customers WHERE MarketingPreferences_AcceptsMarketingEmails = 1 AND IsDeleted = 0";
     private readonly string _connectionString = "Server=localhost,1433;Database=EfCoreDemo;User Id=sa;Password=YourStrong!Passw0rd;TrustServerCertificate=true;";
@@ -23,7 +21,6 @@ public class QueryBenchmarks
     [GlobalSetup]
     public void Setup()
     {
-        _optionsBuilder = new DbContextOptionsBuilder<ApplicationDbContext>();
         _optionsBuilder.UseSqlServer(_connectionString);
     }
 

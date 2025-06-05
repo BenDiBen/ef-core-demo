@@ -1,6 +1,5 @@
-﻿// See https://aka.ms/new-console-template for more information
+﻿using BenchmarkDotNet.Running;
+using EfCoreDemo.Benchmarks;
 
-using BenchmarkDotNet.Running;
-using Benchmarks;
-
-var summary = BenchmarkRunner.Run<QueryBenchmarks>();
+// BenchmarkRunner.Run<SimpleQueryBenchmarks>();
+BenchmarkRunner.Run<JoinedQueryBenchmarks>();

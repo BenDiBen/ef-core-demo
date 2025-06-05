@@ -11,4 +11,6 @@ public class Transaction
     public Money Debit => -Credit;
     public DateTime Requested { get; set; }
     public DateTime? Processed { get; set; }
+    public Account DebitedAccount { get; set; }
+    public Account CreditedAccount { get; set; }
 }
