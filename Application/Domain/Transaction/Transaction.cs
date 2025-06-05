@@ -1,6 +1,6 @@
 ﻿namespace EfCoreDemo.Domain;
 
-public class Transaction
+public class Transaction : ISoftDeleteEntity
 {
     public TransactionId Id { get; set; }
     public Money Credit { get; set; }
@@ -11,6 +11,8 @@ public class Transaction
     public Money Debit => -Credit;
     public DateTime Requested { get; set; }
     public DateTime? Processed { get; set; }
-    public Account DebitedAccount { get; set; }
-    public Account CreditedAccount { get; set; }
+    public required Account DebitedAccount { get; set; }
+    public required Account CreditedAccount { get; set; }
+    public bool IsDeleted { get; set; }
+    public DateTimeOffset? DeletedAt { get; set; }
 }

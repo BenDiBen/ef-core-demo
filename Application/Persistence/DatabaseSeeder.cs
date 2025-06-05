@@ -76,7 +76,7 @@ public class DatabaseSeeder
             .RuleFor(c => c.Accounts, f => _accountFaker.Generate(f.Random.Int(1, 4)));
     }
 
-    public async Task SeedCustomersAsync(ApplicationDbContext context, int count = 10000)
+    public async Task SeedCustomersAsync(ApplicationDbContext context, int count = 1000)
     {
         if (await context.Customers.AnyAsync())
         {

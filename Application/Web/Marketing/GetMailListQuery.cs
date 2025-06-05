@@ -1,6 +1,5 @@
 ﻿using EfCoreDemo.Domain;
 using EfCoreDemo.Persistence;
-using EfCoreDemo.Persistence;
 using Microsoft.EntityFrameworkCore;
 
 namespace EfCoreDemo.Web.Marketing;

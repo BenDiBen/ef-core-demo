@@ -2,7 +2,7 @@
 
 public record StreetDescription
 {
-    public AddressLine FirstLine { get; init; }
+    public required AddressLine FirstLine { get; init; }
     public AddressLine? SecondLine { get; init; }
 
     public static StreetDescription Create(AddressLine firstLine, AddressLine? secondLine = null) =>

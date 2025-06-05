@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EfCoreDemo.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250422134136_FixVarcharMax")]
-    partial class FixVarcharMax
+    [Migration("20250605064809_MakeTransactionSoftDelete")]
+    partial class MakeTransactionSoftDelete
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -111,6 +111,12 @@ namespace EfCoreDemo.Migrations
                         .IsRequired()
                         .HasMaxLength(200)
                         .HasColumnType("nvarchar(200)");
+
+                    b.Property<DateTimeOffset?>("DeletedAt")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
 
                     b.Property<DateTime?>("Processed")
                         .HasColumnType("datetime2");
@@ -389,17 +395,21 @@ namespace EfCoreDemo.Migrations
 
             modelBuilder.Entity("EfCoreDemo.Domain.Transaction", b =>
                 {
-                    b.HasOne("EfCoreDemo.Domain.Account", null)
+                    b.HasOne("EfCoreDemo.Domain.Account", "CreditedAccount")
                         .WithMany("CreditTransactions")
                         .HasForeignKey("CreditedAccountId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("EfCoreDemo.Domain.Account", null)
+                    b.HasOne("EfCoreDemo.Domain.Account", "DebitedAccount")
                         .WithMany("DebitTransactions")
                         .HasForeignKey("DebitedAccountId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
+
+                    b.Navigation("CreditedAccount");
+
+                    b.Navigation("DebitedAccount");
                 });
 
             modelBuilder.Entity("EfCoreDemo.Domain.Account", b =>

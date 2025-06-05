@@ -1,6 +1,5 @@
 ﻿using BenchmarkDotNet.Attributes;
 using EfCoreDemo.Persistence;
-using EfCoreDemo.Persistence;
 using EfCoreDemo.Web.Customer;
 using Microsoft.EntityFrameworkCore;
 
@@ -12,7 +11,7 @@ namespace EfCoreDemo.Benchmarks;
 public class JoinedQueryBenchmarks
 {
     private readonly string _connectionString =
-        "Server=localhost,1433;Database=EfCoreDemo;User Id=sa;Password=YourStrong!Passw0rd;TrustServerCertificate=true;";
+        "Server=localhost,1433;Database=EfCoreDemo;Integrated Security=true;TrustServerCertificate=true;";
 
     private readonly DbContextOptionsBuilder<ApplicationDbContext> _optionsBuilder = new();
 

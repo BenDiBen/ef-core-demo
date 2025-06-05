@@ -1,6 +1,5 @@
 using EfCoreDemo;
 using EfCoreDemo.Persistence;
-using EfCoreDemo.Persistence;
 using EfCoreDemo.Web.Accounts;
 using EfCoreDemo.Web.Customer;
 using EfCoreDemo.Web.Marketing;
