@@ -1,7 +1,10 @@
 using EfCoreDemo;
-using EfCoreDemo.Infrastructure;
+using EfCoreDemo.Persistence;
+using EfCoreDemo.Persistence;
 using EfCoreDemo.Web.Accounts;
+using EfCoreDemo.Web.Customer;
 using EfCoreDemo.Web.Marketing;
+using EfCoreDemo.Web.Transactions;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -26,10 +29,17 @@ app
     .MapGroup("api/marketing")
     .MapGet("/mail-list", GetMailListQuery.Execute);
 
+var customersGroup = app.MapGroup("api/customers");
+
+customersGroup.MapGet("/", GetCustomersPaginatedQuery.Execute);
+customersGroup.MapGet("/{id}/account-activity", GetAccountActivityQuery.Execute);
+
 var accountsGroup = app.MapGroup("api/accounts");
 
 accountsGroup.MapGet("/", GetAccountListPaginatedQuery.Execute);
 accountsGroup.MapGet("/{id}", GetAccountByIdQuery.Execute);
 accountsGroup.MapGet("/{id}/is-overdrawn", GetIsAccountOverdrawnQuery.Execute);
+accountsGroup.MapGet("/{id}/debited-transactions", GetTransactionsByDebitedAccountIdQuery.Execute);
+
 
 app.Run();

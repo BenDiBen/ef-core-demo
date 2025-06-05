@@ -1,6 +1,6 @@
 using Vogen;
 
-namespace EfCoreDemo.Infrastructure.Conversion;
+namespace EfCoreDemo.Persistence.Conversion;
 
 [EfCoreConverter<Domain.AccountId>]
 [EfCoreConverter<Domain.BranchCode>]

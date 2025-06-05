@@ -1,4 +1,5 @@
-﻿using EfCoreDemo.Infrastructure;
+﻿using EfCoreDemo.Persistence;
+using EfCoreDemo.Persistence;
 using Microsoft.EntityFrameworkCore;
 
 namespace EfCoreDemo;

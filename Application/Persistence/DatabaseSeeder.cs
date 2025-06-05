@@ -1,9 +1,9 @@
+using System.Collections.Immutable;
 using Bogus;
 using EfCoreDemo.Domain;
 using Microsoft.EntityFrameworkCore;
-using System.Collections.Immutable;
 
-namespace EfCoreDemo.Infrastructure;
+namespace EfCoreDemo.Persistence;
 
 public class DatabaseSeeder
 {
@@ -16,6 +16,25 @@ public class DatabaseSeeder
 
     public DatabaseSeeder()
     {
+        _accountFaker = new Faker<Account>()
+            .RuleFor(c => c.Id, _ => AccountId.New())
+            .RuleFor(c => c.Number, _ => AccountNumber.From((_accountNumberCounter++).ToString().PadLeft(10, '0')))
+            .RuleFor(c => c.Type, f => f.PickRandom(AccountType.Cheque, AccountType.Savings, AccountType.Transaction))
+            .RuleFor(c => c.BranchCode,
+                f => f.PickRandom(BranchCode.Capetown, BranchCode.Durban, BranchCode.Johannesburg, BranchCode.Pretoria))
+            .RuleFor(c => c.Balance, f => Money.From(f.Finance.Amount(-1e6M, 1e8M)))
+            .RuleFor(c => c.OverdraftLimit, f => Money.From(f.PickRandom(1e3M, 1e4M, 1e6M)));
+
+        _transactionFaker = new Faker<Transaction>()
+            .RuleFor(c => c.Id, _ => TransactionId.New())
+            .RuleFor(c => c.Credit, f => Money.From(f.Finance.Amount(50, 1e6M)))
+            .RuleFor(c => c.CreditedAccountId, f => f.PickRandom(_accountIds))
+            .RuleFor(c => c.DebitedAccountId, f => f.PickRandom(_accountIds))
+            .RuleFor(c => c.Requested, f => f.Date.Past())
+            .RuleFor(c => c.Processed, f => f.Date.Past())
+            .RuleFor(c => c.CreditorReference, _ => TransactionReference.From("Blah blah"))
+            .RuleFor(c => c.DebtorReference, _ => TransactionReference.From("Blah blah"));
+
         _customerFaker = new Faker<Customer>()
             .RuleFor(c => c.Id, _ =>
             {
@@ -55,25 +74,6 @@ public class DatabaseSeeder
                 f.Random.Bool()
             ))
             .RuleFor(c => c.Accounts, f => _accountFaker.Generate(f.Random.Int(1, 4)));
-
-        _accountFaker = new Faker<Account>()
-            .RuleFor(c => c.Id, _ => AccountId.New())
-            .RuleFor(c => c.Number, _ => AccountNumber.From((_accountNumberCounter++).ToString().PadLeft(10, '0')))
-            .RuleFor(c => c.Type, f => f.PickRandom(AccountType.Cheque, AccountType.Savings, AccountType.Transaction))
-            .RuleFor(c => c.BranchCode,
-                f => f.PickRandom(BranchCode.Capetown, BranchCode.Durban, BranchCode.Johannesburg, BranchCode.Pretoria))
-            .RuleFor(c => c.Balance, f => Money.From(f.Finance.Amount(1e2M, 1e8M)))
-            .RuleFor(c => c.OverdraftLimit, f => Money.From(f.PickRandom(1e3M, 1e4M, 1e6M)));
-
-        _transactionFaker = new Faker<Transaction>()
-            .RuleFor(c => c.Id, _ => TransactionId.New())
-            .RuleFor(c => c.Credit, f => Money.From(f.Finance.Amount(50, 1e6M)))
-            .RuleFor(c => c.CreditedAccountId, f => f.PickRandom(_accountIds))
-            .RuleFor(c => c.DebitedAccountId, f => f.PickRandom(_accountIds))
-            .RuleFor(c => c.Requested, f => f.Date.Past())
-            .RuleFor(c => c.Processed, f => f.Date.Past())
-            .RuleFor(c => c.CreditorReference, _ => TransactionReference.From("Blah blah"))
-            .RuleFor(c => c.DebtorReference, _ => TransactionReference.From("Blah blah"));
     }
 
     public async Task SeedCustomersAsync(ApplicationDbContext context, int count = 10000)
@@ -85,7 +85,7 @@ public class DatabaseSeeder
 
         var customers = await GenerateParallelEntitiesAsync(_customerFaker, count);
         
-        _accountIds = customers.SelectMany(c => c.Accounts.Select(a => a.Id)).ToList();
+        _accountIds = customers.SelectMany(c => c.Accounts.Select(a => a.Id)).Take(10).ToList();
         
         var transactions = await GenerateParallelEntitiesAsync(_transactionFaker, count * 10);
         

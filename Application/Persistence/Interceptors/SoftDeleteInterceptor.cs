@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 
-namespace EfCoreDemo.Infrastructure.Interceptors;
+namespace EfCoreDemo.Persistence.Interceptors;
 
 public class SoftDeleteInterceptor : SaveChangesInterceptor
 {

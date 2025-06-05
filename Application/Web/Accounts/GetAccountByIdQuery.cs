@@ -1,5 +1,6 @@
 ﻿using EfCoreDemo.Domain;
-using EfCoreDemo.Infrastructure;
+using EfCoreDemo.Persistence;
+using EfCoreDemo.Persistence;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 

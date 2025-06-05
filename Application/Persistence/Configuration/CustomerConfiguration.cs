@@ -1,11 +1,11 @@
 using System.Collections.Immutable;
 using EfCoreDemo.Domain;
-using EfCoreDemo.Infrastructure.Conversion;
+using EfCoreDemo.Persistence.Conversion;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace EfCoreDemo.Infrastructure.Configuration;
+namespace EfCoreDemo.Persistence.Configuration;
 
 public class CustomerConfiguration : IEntityTypeConfiguration<Customer>
 {

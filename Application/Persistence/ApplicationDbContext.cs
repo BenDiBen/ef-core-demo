@@ -1,11 +1,11 @@
 using System.Linq.Expressions;
-using Microsoft.EntityFrameworkCore;
 using System.Reflection;
 using EfCoreDemo.Domain;
-using EfCoreDemo.Infrastructure.Conversion;
-using EfCoreDemo.Infrastructure.Interceptors;
+using EfCoreDemo.Persistence.Conversion;
+using EfCoreDemo.Persistence.Interceptors;
+using Microsoft.EntityFrameworkCore;
 
-namespace EfCoreDemo.Infrastructure;
+namespace EfCoreDemo.Persistence;
 
 public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : DbContext(options)
 {
